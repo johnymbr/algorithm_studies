@@ -38,6 +38,14 @@ public class MyIntArrayList {
         this.currentIdx = currentIdx;
     }
 
+    public int get(int idx) {
+        if (idx >= this.currentIdx) {
+            throw new IllegalArgumentException("Index out of the list length.");
+        }
+
+        return this.items[idx];
+    }
+
     public void add(int item) {
         if (this.currentIdx == this.capacity - 1) {
             this.increaseCapacity();
@@ -63,7 +71,7 @@ public class MyIntArrayList {
             this.items[idx] = item;
 
             // update the indexes after idx updated.
-            for (int i = idx + 1; i < this.items.length; i++) {
+            for (int i = idx + 1; i <= this.currentIdx; i++) {
                 int aux = this.items[i];
                 this.items[i] = tmp;
                 tmp = aux;
@@ -72,11 +80,21 @@ public class MyIntArrayList {
         this.currentIdx++;
     }
 
-    public boolean removeByItem(int item) {
-        for (int i = 0; i < this.items.length; i++) {
-
+    public boolean remove(int idx) {
+        if (idx >= this.currentIdx) {
+            throw new IllegalArgumentException("Index out of the list length.");
         }
-        return false;
+
+        int next = -1;
+        for (int i = idx; i < this.currentIdx - 1; i++) {
+            next = i+1;
+            this.items[i] = this.items[next];
+        }
+
+        this.items[next] = 0;
+        this.currentIdx--;
+
+        return true;
     }
 
     private void increaseCapacity() {
