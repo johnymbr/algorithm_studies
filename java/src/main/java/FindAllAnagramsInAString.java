@@ -3,16 +3,34 @@ import java.util.List;
 
 public class FindAllAnagramsInAString {
     public List<Integer> findAnagrams(String s, String p) {
-        ArrayList<Integer> ret = new ArrayList<>();
+        List<Integer> ret = new ArrayList<>();
         if (s.length() < p.length()) return ret;
 
-        Integer sLength = s.length();
-        Integer pLength  = p.length() - 1;
-        for (int i = 0; i < sLength; i++) {
-            if ((i + pLength) <= sLength) {
-
-            }
+        int[] freq = new int[26];
+        for (int i = 0; i < p.length(); i++) {
+            freq[p.charAt(i) - 'a'] += 1;
+            freq[s.charAt(i) - 'a'] -= 1;
         }
+
+        int j = 0;
+        for (; j < s.length() - p.length(); j++) {
+            if (check(freq)) {
+                ret.add(j);
+            }
+
+            freq[s.charAt(j) - 'a'] += 1;
+            freq[s.charAt(j + p.length()) - 'a'] -= 1;
+        }
+
+        if (check(freq)) ret.add(j);
+
         return ret;
+    }
+
+    private boolean check(int[] freq) {
+        for (Integer i : freq) {
+            if (i != 0) return false;
+        }
+        return true;
     }
 }
