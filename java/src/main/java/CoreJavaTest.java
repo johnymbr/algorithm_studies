@@ -1,3 +1,5 @@
+import java.util.Collections;
+
 public class CoreJavaTest {
 
     protected String x = "123456";
@@ -17,6 +19,15 @@ public class CoreJavaTest {
         byte a = 10;
         byte b = 15;
         CoreJavaTest c = new CoreJavaTest(a, b);
+
+        Integer i1 = new Integer(100);
+        Integer i2 = new Integer(100);
+
+        if (i1 == i2) {
+            System.out.println("sao iguais");
+        } else {
+            System.out.println("sao diferentes");
+        }
     }
 }
 
